@@ -1,6 +1,6 @@
 // Components
 import EmailVerificationNotificationController from '@/actions/App/Http/Controllers/Auth/EmailVerificationNotificationController';
-import { logout } from '@/routes';
+// Removed logout import - using direct route path
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
@@ -27,7 +27,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                             Resend verification email
                         </Button>
 
-                        <TextLink href={logout()} className="mx-auto block text-sm">
+                        <TextLink href="/logout" method="post" as="button" className="mx-auto block text-sm">
                             Log out
                         </TextLink>
                     </>

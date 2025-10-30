@@ -1,4 +1,4 @@
-import { Link, usePage } from '@inertiajs/react'
+import { Link, usePage, router } from '@inertiajs/react'
 import { PropsWithChildren, ReactNode } from 'react'
 
 export default function AppLayout({ 
@@ -83,14 +83,12 @@ export default function AppLayout({
                                 <div className="flex items-center space-x-4">
                                     <span className="text-sm text-gray-700">
                                         Hello, {auth.user.name}
-                                    </span>                                    <Link
-                                        href="/logout"
-                                        method="post"
-                                        as="button" 
-                                        className="text-sm text-gray-500 hover:text-gray-700"
+                                    </span>                                    <button
+                                        onClick={() => router.post('/logout')}
+                                        className="text-sm text-gray-500 hover:text-gray-700 bg-transparent border-0 p-0 cursor-pointer"
                                     >
                                         Log Out
-                                    </Link>
+                                    </button>
                                 </div>
                             ) : (
                                 <div className="flex items-center space-x-4">

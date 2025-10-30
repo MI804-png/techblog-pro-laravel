@@ -12,6 +12,46 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function index()
+    {
+        $user = auth()->user();
+        
+        // Get user-specific stats
+        $userStats = [
+            'total_restaurants' => Restaurant::count(),
+            'total_dishes' => Dish::count(),
+            'user_orders' => Order::where('user_id', $user->id)->count(),
+            'user_messages' => Message::where('email', $user->email)->count(),
+        ];
+
+        // Get recent restaurants for user to explore
+        $recentRestaurants = Restaurant::with('dishes')
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
+
+        // Get user's recent orders if any
+        $recentOrders = Order::with(['restaurant', 'dish'])
+            ->where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        // Get popular restaurants (with most dishes)
+        $popularRestaurants = Restaurant::withCount('dishes')
+            ->orderBy('dishes_count', 'desc')
+            ->take(3)
+            ->get();
+
+        return Inertia::render('dashboard', [
+            'userStats' => $userStats,
+            'recentRestaurants' => $recentRestaurants,
+            'recentOrders' => $recentOrders,
+            'popularRestaurants' => $popularRestaurants,
+            'user' => $user
+        ]);
+    }
+
     public function graphs()
     {
         // Get restaurant count by cuisine type for chart

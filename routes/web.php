@@ -12,11 +12,30 @@ Route::resource('restaurants', App\Http\Controllers\RestaurantController::class)
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 
+// Debug routes for CSRF and session testing
+Route::get('/debug/csrf', function () {
+    return response()->json([
+        'csrf_token' => csrf_token(),
+        'session_started' => session()->isStarted(),
+        'session_id' => session()->getId(),
+        'session_token' => session()->token(),
+        'request_token' => request()->header('X-CSRF-TOKEN'),
+        'cookies' => request()->cookies->all(),
+    ]);
+});
+
+Route::post('/debug/test-csrf', function () {
+    return response()->json([
+        'message' => 'CSRF validation passed!',
+        'token_from_request' => request()->input('_token'),
+        'token_from_header' => request()->header('X-CSRF-TOKEN'),
+        'session_token' => session()->token(),
+    ]);
+});
+
 // Authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     
     // Messages (for registered users)
     Route::get('/messages', [App\Http\Controllers\MessageController::class, 'index'])->name('messages.index');
