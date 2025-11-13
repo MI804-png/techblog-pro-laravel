@@ -1,6 +1,12 @@
 import { Head, Link } from '@inertiajs/react'
 import AppLayout from '@/layouts/AppLayout'
 
+/**
+ * Welcome Page Component
+ * Designed by: Szabo Lilla (BDCRL0)
+ * Modern responsive homepage with gradient hero section
+ * Features: Restaurant showcase, statistics, call-to-action buttons
+ */
 export default function Welcome() {
     return (
         <AppLayout>
