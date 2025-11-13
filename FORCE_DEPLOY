@@ -1,0 +1,3 @@
+DEPLOYMENT_TIMESTAMP=2024-11-13-15-45-00
+FORCE_REDEPLOY=true
+This file forces Railway to redeploy with latest code changes.
