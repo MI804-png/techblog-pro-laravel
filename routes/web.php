@@ -8,6 +8,17 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+// Simple test route that doesn't use Inertia
+Route::get('/test', function () {
+    return response()->json([
+        'status' => 'Laravel is working!',
+        'timestamp' => now(),
+        'environment' => app()->environment(),
+        'debug' => config('app.debug'),
+        'url' => config('app.url')
+    ]);
+});
+
 // Public routes
 Route::resource('restaurants', App\Http\Controllers\RestaurantController::class)->only(['index', 'show']);
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
