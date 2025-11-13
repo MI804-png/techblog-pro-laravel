@@ -19,6 +19,21 @@ Route::get('/test', function () {
     ]);
 });
 
+// Simple admin test route
+Route::get('/admin-test', function () {
+    return response()->json([
+        'status' => 'Admin route working!',
+        'timestamp' => now(),
+        'routes_exist' => [
+            'admin' => \Route::has('admin.dashboard'),
+            'dashboard' => \Route::has('dashboard'),
+            'messages' => \Route::has('messages.index')
+        ],
+        'users_count' => \App\Models\User::count(),
+        'admin_users' => \App\Models\User::where('role', 'admin')->count()
+    ]);
+});
+
 // Public routes
 Route::resource('restaurants', App\Http\Controllers\RestaurantController::class)->only(['index', 'show']);
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
