@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from '../../wayfinder'
 /**
 * @see \App\Http\Controllers\RestaurantController::index
  * @see app/Http/Controllers/RestaurantController.php:15
@@ -388,3 +388,4 @@ destroy: Object.assign(destroy, destroy),
 }
 
 export default restaurants
+
