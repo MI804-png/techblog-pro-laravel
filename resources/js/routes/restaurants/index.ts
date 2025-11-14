@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from '@/wayfinder/index'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from '@/wayfinder/index.ts'
 /**
 * @see \App\Http\Controllers\RestaurantController::index
  * @see app/Http/Controllers/RestaurantController.php:15

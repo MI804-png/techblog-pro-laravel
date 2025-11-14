@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from '@/wayfinder/index'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from '@/wayfinder/index.ts'
 /**
  * @see routes/web.php:6
  * @route '/'

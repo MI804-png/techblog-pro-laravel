@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from '@/wayfinder/index'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from '@/wayfinder/index.ts'
 /**
 * @see \App\Http\Controllers\Settings\ProfileController::edit
  * @see app/Http/Controllers/Settings/ProfileController.php:19

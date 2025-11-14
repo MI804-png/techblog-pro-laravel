@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from '@/wayfinder/index'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from '@/wayfinder/index.ts'
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
  * @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:16
