@@ -1,7 +1,5 @@
-import { Head, router } from '@inertiajs/react';
-import { Trash2 } from 'lucide-react';
+import { Head } from '@inertiajs/react';
 import AppLayout from '@/layouts/AppLayout';
-import { Button } from '@/components/ui/button';
 
 interface Message {
     id: number;
@@ -15,29 +13,9 @@ interface Message {
 
 interface Props {
     message: Message;
-    auth?: {
-        user: {
-            role: string;
-        }
-    }
 }
 
-export default function Show({ message, auth }: Props) {
-    const isAdmin = auth?.user?.role === 'admin';
-
-    const handleDelete = () => {
-        if (confirm(`Are you sure you want to delete the message "${message.subject}"? This action cannot be undone.`)) {
-            router.delete(`/messages/${message.id}`, {
-                onSuccess: () => {
-                    // Will redirect to messages index automatically
-                },
-                onError: (errors) => {
-                    alert('Failed to delete message. Please try again.');
-                }
-            });
-        }
-    };
-
+export default function Show({ message }: Props) {
     return (
         <AppLayout>
             <Head title={`Message: ${message.subject}`} />
@@ -108,25 +86,12 @@ export default function Show({ message, auth }: Props) {
                                         Back to Messages
                                     </a>
                                     
-                                    <div className="flex gap-2">
-                                        <a
-                                            href={`/messages/${message.id}/edit`}
-                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                        >
-                                            Edit Message
-                                        </a>
-                                        
-                                        {isAdmin && (
-                                            <Button
-                                                variant="destructive"
-                                                onClick={handleDelete}
-                                                className="flex items-center gap-2"
-                                            >
-                                                <Trash2 className="h-4 w-4" />
-                                                Delete Message
-                                            </Button>
-                                        )}
-                                    </div>
+                                    <a
+                                        href={`/messages/${message.id}/edit`}
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                    >
+                                        Edit Message
+                                    </a>
                                 </div>
                             </div>
                         </div>
