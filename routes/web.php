@@ -81,17 +81,6 @@ Route::get('/csrf-token', function () {
 
 // Public routes - specific routes BEFORE parameterized routes
 Route::get('/restaurants', [App\Http\Controllers\RestaurantController::class, 'index'])->name('restaurants.index');
-
-// Admin routes (temporarily without middleware for testing) - Define admin routes FIRST
-Route::group([], function () {
-    Route::get('/admin', [App\Http\Controllers\DashboardController::class, 'admin'])->name('admin.dashboard');
-    
-    // CRUD for restaurants (admin only) - specific routes like 'create' will be defined here
-    Route::resource('restaurants', App\Http\Controllers\RestaurantController::class)->except(['index', 'show']);
-});
-
-// Public parameterized routes AFTER all specific routes
-// Note: specific routes like /restaurants/create must come BEFORE parameterized routes like /restaurants/{restaurant}
 Route::get('/restaurants/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'show'])->name('restaurants.show');
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
@@ -212,8 +201,8 @@ Route::get('/test/simple-inertia', function () {
     ]);
 });
 
-// Authenticated routes (temporarily without auth for testing - will restore auth later)
-Route::group([], function () {
+// Authenticated routes - Restore authentication middleware
+Route::middleware('auth')->group(function () {
     Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     
     // Messages (for registered users)
@@ -230,12 +219,16 @@ Route::group([], function () {
     Route::get('/graphs', [App\Http\Controllers\DashboardController::class, 'graphs'])->name('graphs.index');
 });
 
-// Admin routes (temporarily without middleware for testing)
-Route::group([], function () {
+// Admin routes - Restore authentication and admin middleware
+Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [App\Http\Controllers\DashboardController::class, 'admin'])->name('admin.dashboard');
     
-    // CRUD for restaurants (admin only)
-    Route::resource('restaurants', App\Http\Controllers\RestaurantController::class)->except(['index', 'show']);
+    // CRUD for restaurants (admin only) - Define these BEFORE parameterized routes
+    Route::get('/restaurants/create', [App\Http\Controllers\RestaurantController::class, 'create'])->name('restaurants.create');
+    Route::post('/restaurants', [App\Http\Controllers\RestaurantController::class, 'store'])->name('restaurants.store');
+    Route::get('/restaurants/{restaurant}/edit', [App\Http\Controllers\RestaurantController::class, 'edit'])->name('restaurants.edit');
+    Route::put('/restaurants/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'update'])->name('restaurants.update');
+    Route::delete('/restaurants/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'destroy'])->name('restaurants.destroy');
 });
 
 // Debug route for admin testing
