@@ -52,12 +52,21 @@ export default function AppLayout({
                                 </Link>
 
                                 {auth.user && (
-                                    <Link 
-                                        href="/messages" 
-                                        className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
-                                    >
-                                        Messages
-                                    </Link>
+                                    <>
+                                        <Link 
+                                            href="/orders" 
+                                            className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
+                                        >
+                                            My Orders
+                                        </Link>
+                                        
+                                        <Link 
+                                            href="/messages" 
+                                            className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
+                                        >
+                                            Messages
+                                        </Link>
+                                    </>
                                 )}
 
                                 {auth.user?.role === 'admin' && (
@@ -148,6 +157,9 @@ export default function AppLayout({
                             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>                            <ul className="space-y-2">
                                 <li><Link href="/" className="text-gray-300 hover:text-white">Home</Link></li>
                                 <li><Link href="/restaurants" className="text-gray-300 hover:text-white">Restaurants</Link></li>
+                                {auth.user && (
+                                    <li><Link href="/orders" className="text-gray-300 hover:text-white">My Orders</Link></li>
+                                )}
                                 <li><Link href="/contact" className="text-gray-300 hover:text-white">Contact</Link></li>
                             </ul>
                         </div>
@@ -159,6 +171,9 @@ export default function AppLayout({
                     </div>
                     <div className="border-t border-gray-700 mt-8 pt-8 text-center">
                         <p className="text-gray-300">&copy; 2025 Restaurant Hub. All rights reserved.</p>
+                        <p className="text-gray-400 text-sm mt-2">
+                            Developed by Mikhael & Szabo Lilla
+                        </p>
                     </div>
                 </div>
             </footer>
