@@ -5,13 +5,14 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, UtensilsCrossed, MessageSquare, BarChart, Mail, Shield, Plus, User, Settings, Home, LogIn } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, UtensilsCrossed, MessageSquare, BarChart, Mail, Shield, Plus, User, Settings, Home, LogIn, ShoppingBag } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const iconMap = {
     'Home': Home,
     'LayoutDashboard': LayoutGrid,
     'UtensilsCrossed': UtensilsCrossed,
+    'ShoppingBag': ShoppingBag,
     'MessageSquare': MessageSquare,
     'BarChart': BarChart,
     'Mail': Mail,

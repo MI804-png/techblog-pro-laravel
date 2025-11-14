@@ -21,6 +21,7 @@ export default function CreateRestaurant() {
         price_range: '',
         opening_hours: '',
         website: '',
+        image_url: '',
         is_active: true,
     });
 
@@ -210,6 +211,21 @@ export default function CreateRestaurant() {
                             placeholder="Mon-Sun: 9:00 AM - 10:00 PM"
                         />
                         <InputError message={errors.opening_hours} />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="image_url">Restaurant Photo</Label>
+                        <Input
+                            id="image_url"
+                            type="url"
+                            value={data.image_url}
+                            onChange={(e) => setData('image_url', e.target.value)}
+                            placeholder="Add photo URL (e.g., https://example.com/photo.jpg)"
+                        />
+                        <InputError message={errors.image_url} />
+                        <p className="text-sm text-gray-500">
+                            {data.image_url ? '✓ Photo URL added' : '📷 Add a photo to showcase your restaurant'}
+                        </p>
                     </div>
 
                     <div className="flex items-center space-x-2">

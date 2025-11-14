@@ -48,7 +48,7 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:restaurants,name',
             'address' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
@@ -69,7 +69,7 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::create($validated);
 
         return redirect()->route('restaurants.index')
-            ->with('success', 'Restaurant created successfully!');
+            ->with('success', 'Restaurant "' . $restaurant->name . '" created successfully!');
     }
 
     /**

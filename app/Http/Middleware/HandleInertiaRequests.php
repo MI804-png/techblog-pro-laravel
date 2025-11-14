@@ -91,6 +91,7 @@ class HandleInertiaRequests extends Middleware
         $navigation = [
             ['name' => 'Dashboard', 'href' => '/dashboard', 'icon' => 'LayoutDashboard'],
             ['name' => 'Restaurants', 'href' => '/restaurants', 'icon' => 'UtensilsCrossed'],
+            ['name' => 'My Orders', 'href' => '/orders', 'icon' => 'ShoppingBag'],
             ['name' => 'Messages', 'href' => '/messages', 'icon' => 'MessageSquare'],
             ['name' => 'Graphs', 'href' => '/graphs', 'icon' => 'BarChart'],
             ['name' => 'Contact', 'href' => '/contact', 'icon' => 'Mail'],
