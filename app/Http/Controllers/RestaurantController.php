@@ -30,7 +30,12 @@ class RestaurantController extends Controller
         
         return Inertia::render('restaurants/show', [
             'restaurant' => $restaurant,
-            'dishes' => $dishes
+            'dishes' => $dishes,
+            'auth' => [
+                'user' => auth()->user() ? [
+                    'role' => auth()->user()->role
+                ] : null
+            ]
         ]);
     }
 

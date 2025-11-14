@@ -1,5 +1,5 @@
-import { Head, Link } from '@inertiajs/react'
-import { Plus } from 'lucide-react'
+import { Head, Link, router } from '@inertiajs/react'
+import { Plus, Trash2 } from 'lucide-react'
 import AppLayout from '@/layouts/app-layout'
 import { Button } from '@/components/ui/button'
 
@@ -28,6 +28,19 @@ interface Props {
 
 export default function RestaurantsIndex({ restaurants, auth }: Props) {
     const isAdmin = auth?.user?.role === 'admin';
+
+    const handleDelete = (restaurantId: number, restaurantName: string) => {
+        if (confirm(`Are you sure you want to delete "${restaurantName}"? This action cannot be undone.`)) {
+            router.delete(`/restaurants/${restaurantId}`, {
+                onSuccess: () => {
+                    // Optionally show success message
+                },
+                onError: (errors) => {
+                    alert('Failed to delete restaurant. Please try again.');
+                }
+            });
+        }
+    };
 
     return (
         <AppLayout>
@@ -124,11 +137,28 @@ export default function RestaurantsIndex({ restaurants, auth }: Props) {
                                             View Menu
                                         </Link>
                                         
-                                        <div className="text-right">
-                                            {restaurant.phone && (
-                                                <p className="text-xs text-gray-500">{restaurant.phone}</p>
-                                            )}
-                                        </div>
+                                        {isAdmin ? (
+                                            <div className="flex gap-2 items-center">
+                                                {restaurant.phone && (
+                                                    <p className="text-xs text-gray-500">{restaurant.phone}</p>
+                                                )}
+                                                <Button
+                                                    variant="destructive"
+                                                    size="sm"
+                                                    onClick={() => handleDelete(restaurant.id, restaurant.name)}
+                                                    className="flex items-center gap-1"
+                                                >
+                                                    <Trash2 className="h-3 w-3" />
+                                                    Delete
+                                                </Button>
+                                            </div>
+                                        ) : (
+                                            <div className="text-right">
+                                                {restaurant.phone && (
+                                                    <p className="text-xs text-gray-500">{restaurant.phone}</p>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>                            ))}

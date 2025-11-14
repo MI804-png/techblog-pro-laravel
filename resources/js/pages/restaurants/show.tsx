@@ -1,5 +1,7 @@
-import { Head, Link } from '@inertiajs/react'
+import { Head, Link, router } from '@inertiajs/react'
+import { Trash2 } from 'lucide-react'
 import AppLayout from '@/layouts/AppLayout'
+import { Button } from '@/components/ui/button'
 
 interface Restaurant {
     id: number
@@ -28,9 +30,29 @@ interface Dish {
 interface Props {
     restaurant: Restaurant
     dishes: Dish[]
+    auth?: {
+        user: {
+            role: string
+        }
+    }
 }
 
-export default function RestaurantShow({ restaurant, dishes }: Props) {
+export default function RestaurantShow({ restaurant, dishes, auth }: Props) {
+    const isAdmin = auth?.user?.role === 'admin';
+
+    const handleDelete = () => {
+        if (confirm(`Are you sure you want to delete "${restaurant.name}"? This action cannot be undone and will also delete all associated menu items.`)) {
+            router.delete(`/restaurants/${restaurant.id}`, {
+                onSuccess: () => {
+                    // Will redirect to restaurants index automatically
+                },
+                onError: (errors) => {
+                    alert('Failed to delete restaurant. Please try again.');
+                }
+            });
+        }
+    };
+
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -88,12 +110,25 @@ export default function RestaurantShow({ restaurant, dishes }: Props) {
                                             <span className="text-gray-500 ml-1">rating</span>
                                         </div>
                                     </div>
-                                    <Link
-                                        href="/restaurants"
-                                        className="text-purple-600 hover:text-purple-800 font-medium"
-                                    >
-                                        ← Back to Restaurants
-                                    </Link>
+                                    <div className="flex gap-2">
+                                        <Link
+                                            href="/restaurants"
+                                            className="text-purple-600 hover:text-purple-800 font-medium"
+                                        >
+                                            ← Back to Restaurants
+                                        </Link>
+                                        {isAdmin && (
+                                            <Button
+                                                variant="destructive"
+                                                size="sm"
+                                                onClick={handleDelete}
+                                                className="flex items-center gap-1"
+                                            >
+                                                <Trash2 className="h-3 w-3" />
+                                                Delete
+                                            </Button>
+                                        )}
+                                    </div>
                                 </div>
                                 
                                 {restaurant.description && (
