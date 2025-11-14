@@ -13,7 +13,12 @@ class MessageController extends Controller
         $messages = Message::orderBy('created_at', 'desc')->get();
         
         return Inertia::render('messages/index', [
-            'messages' => $messages
+            'messages' => $messages,
+            'auth' => [
+                'user' => auth()->user() ? [
+                    'role' => auth()->user()->role
+                ] : null
+            ]
         ]);
     }
 
@@ -23,7 +28,12 @@ class MessageController extends Controller
         $message->update(['is_read' => true]);
         
         return Inertia::render('messages/show', [
-            'message' => $message
+            'message' => $message,
+            'auth' => [
+                'user' => auth()->user() ? [
+                    'role' => auth()->user()->role
+                ] : null
+            ]
         ]);
     }
 

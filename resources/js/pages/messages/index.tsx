@@ -1,5 +1,7 @@
-import { Head, Link } from '@inertiajs/react'
+import { Head, Link, router } from '@inertiajs/react'
+import { Trash2 } from 'lucide-react'
 import AppLayout from '@/layouts/app-layout'
+import { Button } from '@/components/ui/button'
 
 interface Message {
     id: number
@@ -13,11 +15,31 @@ interface Message {
 
 interface Props {
     messages: Message[]
+    auth?: {
+        user: {
+            role: string
+        }
+    }
 }
 
-export default function MessagesIndex({ messages }: Props) {
+export default function MessagesIndex({ messages, auth }: Props) {
+    const isAdmin = auth?.user?.role === 'admin'
+
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleString()
+    }
+
+    const handleDelete = (messageId: number, subject: string) => {
+        if (confirm(`Are you sure you want to delete the message "${subject}"? This action cannot be undone.`)) {
+            router.delete(`/messages/${messageId}`, {
+                onSuccess: () => {
+                    // Message deleted successfully
+                },
+                onError: (errors) => {
+                    alert('Failed to delete message. Please try again.')
+                }
+            })
+        }
     }
 
     return (
@@ -64,12 +86,25 @@ export default function MessagesIndex({ messages }: Props) {
                                                     <p className="text-sm text-gray-500">
                                                         {formatDate(message.created_at)}
                                                     </p>
-                                                </div>                                                <Link
-                                                    href={`/messages/${message.id}`}
-                                                    className="text-purple-600 hover:text-purple-800 text-sm font-medium"
-                                                >
-                                                    View →
-                                                </Link>
+                                                </div>                                                <div className="flex gap-2">
+                                                    <Link
+                                                        href={`/messages/${message.id}`}
+                                                        className="text-purple-600 hover:text-purple-800 text-sm font-medium"
+                                                    >
+                                                        View →
+                                                    </Link>
+                                                    {isAdmin && (
+                                                        <Button
+                                                            variant="destructive"
+                                                            size="sm"
+                                                            onClick={() => handleDelete(message.id, message.subject)}
+                                                            className="flex items-center gap-1"
+                                                        >
+                                                            <Trash2 className="h-3 w-3" />
+                                                            Delete
+                                                        </Button>
+                                                    )}
+                                                </div>
                                             </div>
                                             
                                             <div className="mt-3">
