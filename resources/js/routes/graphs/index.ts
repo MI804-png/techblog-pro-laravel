@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from '@/wayfinder/index.ts'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from '@/wayfinder/index'
 /**
 * @see \App\Http\Controllers\DashboardController::index
  * @see app/Http/Controllers/DashboardController.php:55
