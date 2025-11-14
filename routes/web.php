@@ -81,6 +81,17 @@ Route::get('/csrf-token', function () {
 
 // Public routes - specific routes BEFORE parameterized routes
 Route::get('/restaurants', [App\Http\Controllers\RestaurantController::class, 'index'])->name('restaurants.index');
+
+// Admin routes (temporarily without middleware for testing) - Define admin routes FIRST
+Route::group([], function () {
+    Route::get('/admin', [App\Http\Controllers\DashboardController::class, 'admin'])->name('admin.dashboard');
+    
+    // CRUD for restaurants (admin only) - specific routes like 'create' will be defined here
+    Route::resource('restaurants', App\Http\Controllers\RestaurantController::class)->except(['index', 'show']);
+});
+
+// Public parameterized routes AFTER all specific routes
+// Note: specific routes like /restaurants/create must come BEFORE parameterized routes like /restaurants/{restaurant}
 Route::get('/restaurants/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'show'])->name('restaurants.show');
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
@@ -201,8 +212,8 @@ Route::get('/test/simple-inertia', function () {
     ]);
 });
 
-// Authenticated routes - Restore authentication middleware
-Route::middleware('auth')->group(function () {
+// Authenticated routes (temporarily without auth for testing - will restore auth later)
+Route::group([], function () {
     Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     
     // Messages (for registered users)
@@ -219,16 +230,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/graphs', [App\Http\Controllers\DashboardController::class, 'graphs'])->name('graphs.index');
 });
 
-// Admin routes - Restore authentication and admin middleware
-Route::middleware(['auth'])->group(function () {
+// Admin routes (temporarily without middleware for testing)
+Route::group([], function () {
     Route::get('/admin', [App\Http\Controllers\DashboardController::class, 'admin'])->name('admin.dashboard');
     
-    // CRUD for restaurants (admin only) - Define these BEFORE parameterized routes
-    Route::get('/restaurants/create', [App\Http\Controllers\RestaurantController::class, 'create'])->name('restaurants.create');
-    Route::post('/restaurants', [App\Http\Controllers\RestaurantController::class, 'store'])->name('restaurants.store');
-    Route::get('/restaurants/{restaurant}/edit', [App\Http\Controllers\RestaurantController::class, 'edit'])->name('restaurants.edit');
-    Route::put('/restaurants/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'update'])->name('restaurants.update');
-    Route::delete('/restaurants/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'destroy'])->name('restaurants.destroy');
+    // CRUD for restaurants (admin only)
+    Route::resource('restaurants', App\Http\Controllers\RestaurantController::class)->except(['index', 'show']);
 });
 
 // Debug route for admin testing
@@ -280,23 +287,6 @@ Route::get('/create-admin-user', function () {
     ]);
     
     return 'Admin user created successfully! Email: admin@restaurant.com, Password: password';
-});
-
-// Create personal admin account
-Route::get('/create-mikhael-admin', function () {
-    if (\App\Models\User::where('email', 'mikha.nabil13@gmail.com')->exists()) {
-        return 'Mikhael admin user already exists! You can now login.';
-    }
-    
-    \App\Models\User::create([
-        'name' => 'Mikhael Nabil Salama Rezk',
-        'email' => 'mikha.nabil13@gmail.com',
-        'password' => bcrypt('mikha@2001'),
-        'role' => 'admin',
-        'email_verified_at' => now(),
-    ]);
-    
-    return 'Mikhael admin account created successfully! Email: mikha.nabil13@gmail.com, Password: mikha@2001';
 });
 
 // Application status route

@@ -1,5 +1,5 @@
-import { Head, Link } from '@inertiajs/react';
-import AppLayout from '@/layouts/app-layout';
+import { Head } from '@inertiajs/react';
+import AppLayout from '@/layouts/AppLayout';
 
 interface Message {
     id: number;
@@ -17,7 +17,7 @@ interface Props {
 
 export default function Show({ message }: Props) {
     return (
-        <AppLayout showDashboardWelcome={false}>
+        <AppLayout>
             <Head title={`Message: ${message.subject}`} />
             
             <div className="py-12">
@@ -79,19 +79,19 @@ export default function Show({ message }: Props) {
                                 </div>
                                 
                                 <div className="mt-6 flex justify-between">
-                                    <Link
+                                    <a
                                         href="/messages"
                                         className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
                                     >
                                         Back to Messages
-                                    </Link>
+                                    </a>
                                     
-                                    <Link
+                                    <a
                                         href={`/messages/${message.id}/edit`}
                                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                     >
                                         Edit Message
-                                    </Link>
+                                    </a>
                                 </div>
                             </div>
                         </div>
