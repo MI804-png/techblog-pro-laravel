@@ -130,12 +130,22 @@ export default function RestaurantsIndex({ restaurants, auth }: Props) {
                                     </p>
                                     
                                     <div className="flex justify-between items-center">
-                                        <Link
-                                            href={`/restaurants/${restaurant.id}`}
-                                            className="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700 transition duration-300"
-                                        >
-                                            View Menu
-                                        </Link>
+                                        <div className="flex gap-2">
+                                            <Link
+                                                href={`/restaurants/${restaurant.id}`}
+                                                className="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700 transition duration-300"
+                                            >
+                                                View Menu
+                                            </Link>
+                                            {auth?.user && (
+                                                <Link
+                                                    href={`/orders/create?restaurant=${restaurant.id}`}
+                                                    className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700 transition duration-300"
+                                                >
+                                                    Order Now
+                                                </Link>
+                                            )}
+                                        </div>
                                         
                                         {isAdmin ? (
                                             <div className="flex gap-2 items-center">
@@ -153,11 +163,9 @@ export default function RestaurantsIndex({ restaurants, auth }: Props) {
                                                 </Button>
                                             </div>
                                         ) : (
-                                            <div className="text-right">
-                                                {restaurant.phone && (
-                                                    <p className="text-xs text-gray-500">{restaurant.phone}</p>
-                                                )}
-                                            </div>
+                                            restaurant.phone && (
+                                                <p className="text-xs text-gray-500">{restaurant.phone}</p>
+                                            )
                                         )}
                                     </div>
                                 </div>

@@ -171,7 +171,14 @@ export default function RestaurantShow({ restaurant, dishes, auth }: Props) {
                     {/* Menu */}
                     <div className="bg-white overflow-hidden shadow-lg rounded-lg">
                         <div className="p-6">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-6">Menu</h2>
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="text-2xl font-bold text-gray-900">Menu</h2>
+                                {auth?.user && (
+                                    <Link href={`/orders/create?restaurant=${restaurant.id}`}>
+                                        <Button>Place an Order</Button>
+                                    </Link>
+                                )}
+                            </div>
                             
                             {Object.keys(dishesByCategory).length > 0 ? (
                                 <div className="space-y-8">
