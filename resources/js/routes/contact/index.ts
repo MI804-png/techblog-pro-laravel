@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from '@/wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from '@/wayfinder/index'
 /**
 * @see \App\Http\Controllers\ContactController::index
  * @see app/Http/Controllers/ContactController.php:11
