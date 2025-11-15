@@ -66,6 +66,6 @@ The application uses 4 main tables:
 
 ## Course Information
 - **Course**: Web Programming 2
-- **Institution**: ELTE
-- **Academic Year**: 2024/2025
-- **Submission Date**: October 30, 2025
+- **Institution**: NJE
+- **Academic Year**: 2025/2026
+- **Submission Date**: November 15, 2025
